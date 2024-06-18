@@ -1,0 +1,136 @@
+
+
+<div class="container">
+  <div class="left">
+    <h1>Here you can manage your subscription</h1>
+    <p>If you have any further questions always feel free to contact us!</p>
+    <div class="user-info">
+      <button id="left">Log In</button>
+      <button class="outline" id="right">Sign Up</button>
+    </div>
+  </div>
+  <div class="right">
+    <img src="/images/231127_FeatureImage_11.png" alt="Subscription Image">
+  </div>
+</div>
+
+
+<template id="content">
+  <figure class="content-display">
+    <img />
+    <figcaption>
+      <a class="credit"></a>
+    </figcaption>
+  </figure>
+</template>
+
+<script
+  type="text/javascript"
+  src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+></script>
+
+<script>
+  const button1 = document.getElementById('left');
+  const button2 = document.getElementById('right');
+
+  const login = () => netlifyIdentity.open('login');
+  const signup = () => netlifyIdentity.open('signup');
+
+  // by default, we want to add login and signup functionality
+  button1.addEventListener('click', login);
+  button2.addEventListener('click', signup);
+
+  const updateUserInfo = (user) => {
+    const container = document.querySelector('.user-info');
+
+    // cloning the buttons removes existing event listeners
+    const b1 = button1.cloneNode(true);
+    const b2 = button2.cloneNode(true);
+
+    // empty the user info div
+    container.innerHTML = '';
+
+    if (user) {
+      b1.innerText = 'Manage Subscription';
+      b1.addEventListener('click', () => {
+        // TODO handle subscription management
+        fetch('/.netlify/functions/create-manage-link', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${user.token.access_token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((link) => {
+            window.location.href = link;
+          })
+          .catch((err) => console.error(err));
+      });
+
+      b2.innerText = 'Log Out';
+      b2.addEventListener('click', () => {
+        netlifyIdentity.logout();
+      });
+    } else {
+      // if no one is logged in, show login/signup options
+      b1.innerText = 'Log In';
+      b1.addEventListener('click', login);
+
+      b2.innerText = 'Sign Up';
+      b2.addEventListener('click', signup);
+    }
+
+    // add the updated buttons back to the user info div
+    container.appendChild(b1);
+    container.appendChild(b2);
+  };
+
+  const loadSubscriptionContent = async (user) => {
+    const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
+    ['base', 'free', 'premium'].forEach((type) => {
+      fetch('/.netlify/functions/get-protected-content', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ type }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const template = document.querySelector('#content');
+          const container = document.querySelector(`.${type}`);
+
+          // remove any existing content from the content containers
+          const oldContent = container.querySelector('.content-display');
+          if (oldContent) {
+            container.removeChild(oldContent);
+          }
+
+          const content = template.content.cloneNode(true);
+
+          const img = content.querySelector('img');
+          img.src = data.src;
+          img.alt = data.alt;
+
+          const credit = content.querySelector('.credit');
+          credit.href = data.creditLink;
+          credit.innerText = `Credit: ${data.credit}`;
+
+          const caption = content.querySelector('figcaption');
+          caption.innerText = data.message;
+          caption.appendChild(credit);
+
+          container.appendChild(content);
+        });
+    });
+  };
+
+  const handleUserStateChange = (user) => {
+    updateUserInfo(user);
+    loadSubscriptionContent(user);
+  };
+
+  netlifyIdentity.on('init', handleUserStateChange);
+  netlifyIdentity.on('login', handleUserStateChange);
+  netlifyIdentity.on('logout', handleUserStateChange);
+</script>
