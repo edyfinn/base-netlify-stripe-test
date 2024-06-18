@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const fetch = require('node-fetch');
 const { faunaFetch } = require('./utils/fauna');
 
@@ -8,7 +8,7 @@ exports.handler = async ({ body, headers }, context) => {
     const stripeEvent = stripe.webhooks.constructEvent(
       body,
       headers['stripe-signature'],
-      process.env.STRIPE_WEBHOOK_SECRET,
+      process.env.STRIPE_WEBHOOK_SECRET_TEST,
     );
 
     // bail if this is not a subscription update event
@@ -19,7 +19,7 @@ exports.handler = async ({ body, headers }, context) => {
     const result = await faunaFetch({
       query: `
           query ($stripeID: ID!) {
-            getUserByStripeID(stripeID: $stripeID) {
+            getUserByStripeID_TEST(stripeID: $stripeID) {
               netlifyID
             }
           }

@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const fetch = require('node-fetch');
 const faunaDB = require('faunadb');
 var q = faunaDB.query;
@@ -12,18 +12,18 @@ exports.handler = async () => {
     /*const { user } = context.clientContext;
     console.log("Usuario: " + user.sub);*/
 
-    const mySecret = process.env.STRIPE_SECRET_KEY;
-    const mySecret1 = process.env.FAUNA_SERVER_KEY_V10
-    const mySecret2 = process.env.STRIPE_DEFAULT_PRICE_PLAN
+    const mySecret = process.env.STRIPE_SECRET_KEY_TEST;
+    const mySecret1 = process.env.FAUNA_SERVER_KEY_V10_TEST
+    const mySecret2 = process.env.STRIPE_DEFAULT_PRICE_PLAN_TEST
 
     var client = new faunaDB.Client({
-      secret: process.env.FAUNA_BD_STRIPE,
-      domain: 'db.eu.fauna.com',
+      secret: process.env.FAUNA_BD_STRIPE_TEST,
+      domain: 'db.eu.fauna.com_TEST',
       scheme: 'https',
     });
 
     let respuesta = await client.query(
-      q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
+      q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
     );
     //usuario = JSON.stringify(usuarioStripe);
     //console.log(JSON.stringify(respuesta[0]));
@@ -66,13 +66,13 @@ async function getLinkPago(cliente) {
 
 async function getClienteStripe() {
   var client = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE,
-    domain: 'db.eu.fauna.com',
+    secret: process.env.FAUNA_BD_STRIPE_TEST,
+    domain: 'db.eu.fauna.com_TEST',
     scheme: 'https',
   });
 
   const respuesta = await client.query(
-    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
+    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
   );
   //console.log(JSON.stringify(respuesta[0]))
   return respuesta;

@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const { queryCrearNetIDStripeID, faunaConexion, faunaFetch } = require('./utils/fauna');
 const faunaDB = require('faunadb');
 var q = faunaDB.query
@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     customer: customer.id,
     items: [
       {
-        price: process.env.STRIPE_BASE_PLAN,
+        price: process.env.STRIPE_BASE_PLAN_TEST,
       },
     ],
     trial_period_days: 14,
