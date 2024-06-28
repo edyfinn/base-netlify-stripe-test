@@ -1,6 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const fetch = require('node-fetch');
-const { faunaFetch } = require('./utils/fauna');
+const { faunaFetch } = require('./utils/fauna.js');
 
 exports.handler = async ({ body, headers }, context) => {
   try {

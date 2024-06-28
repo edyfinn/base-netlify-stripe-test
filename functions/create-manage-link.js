@@ -1,5 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
-const { queryStripeCliente, faunaConexion, faunaFetch } = require('./utils/fauna');
+const { queryStripeCliente } = require('./utils/fauna');
 
 //Crea un enlace a la suscripción
 exports.handler = async (_event, context) => {

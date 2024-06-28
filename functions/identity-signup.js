@@ -1,5 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
-const { queryCrearNetIDStripeID, faunaConexion, faunaFetch } = require('./utils/fauna');
+const { queryCrearNetIDStripeID } = require('./utils/fauna');
 const faunaDB = require('faunadb');
 var q = faunaDB.query
 
