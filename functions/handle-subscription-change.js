@@ -19,7 +19,7 @@ exports.handler = async ({ body, headers }, context) => {
     const result = await faunaFetch({
       query: `
           query ($stripeID: ID!) {
-            getUserByStripeID_TEST(stripeID: $stripeID) {
+            getUserByStripeIDTEST(stripeID: $stripeID) {
               netlifyID
             }
           }

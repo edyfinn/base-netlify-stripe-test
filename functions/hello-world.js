@@ -23,7 +23,7 @@ exports.handler = async () => {
     });
 
     let respuesta = await client.query(
-      q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
+      q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
     );
     //usuario = JSON.stringify(usuarioStripe);
     //console.log(JSON.stringify(respuesta[0]));
@@ -72,7 +72,7 @@ async function getClienteStripe() {
   });
 
   const respuesta = await client.query(
-    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
+    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
   );
   //console.log(JSON.stringify(respuesta[0]))
   return respuesta;

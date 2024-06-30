@@ -19,7 +19,7 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
   });
 
   await clientFauna.query(
-    q.Create(q.Collection('UsuariosBuenos_TEST'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
+    q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
   );
 
 }
@@ -32,7 +32,7 @@ exports.queryStripeCliente = async (idNetlify) => {
   });
 
   const respuesta = await clientFauna.query(
-    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), idNetlify)))
+    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), idNetlify)))
   );
 
   //clientFauna.close();
@@ -47,7 +47,7 @@ exports.querySesionCliente = async (idNetlify) => {
   });
 
   const respuesta = await clientFauna.query(
-    q.Select('data', q.Paginate(q.Match(q.Index('session_by_netlifyID_TEST'), idNetlify)))
+    q.Select('data', q.Paginate(q.Match(q.Index('session_by_netlifyIDTEST'), idNetlify)))
   );
 
   //clientFauna.close();
