@@ -41,7 +41,7 @@ function getCircleOpacity(row, col) {
 
 let offset = 0;
 function drawCircles() {
-  const ctx = document.querySelector('#canvas').getContext('2d');
+  /*const ctx = document.querySelector('#canvas').getContext('2d');
   ctx.save();
 
   // for each loop, remove any existing shapes
@@ -75,7 +75,7 @@ function drawCircles() {
     }
   }
 
-  ctx.restore();
+  ctx.restore();*/
 }
 
 export const startAnimation = () => {

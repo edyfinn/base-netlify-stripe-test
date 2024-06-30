@@ -53,6 +53,8 @@
     <div class="user-info">
       <button id="left">Log In</button>
       <button class="outline" id="right">Sign Up</button>
+      <button id="cupon">Cupon</button>
+      <input type="text" id="cupontxt"></input>
     </div>
   </div>
   <div class="right">
@@ -110,6 +112,8 @@
 <script>
   const button1 = document.getElementById('left');
   const button2 = document.getElementById('right');
+  const button3 = document.getElementById('cupon');
+  const cuponTXT = document.getElementById('cupontxt');
   const logged = document.getElementById('logged-container');
 
   const login = () => netlifyIdentity.open('login');
@@ -118,6 +122,8 @@
   // by default, we want to add login and signup functionality
   button1.addEventListener('click', login);
   button2.addEventListener('click', signup);
+  //button3.addEventListener('click', signup);
+  
 
   const updateUserInfo = (user) => {
     const container = document.querySelector('.user-info');
@@ -125,6 +131,7 @@
     // cloning the buttons removes existing event listeners
     const b1 = button1.cloneNode(true);
     const b2 = button2.cloneNode(true);
+    const b3 = button3.cloneNode(true);
 
     // empty the user info div
     container.innerHTML = '';
@@ -151,6 +158,16 @@
       b2.addEventListener('click', () => {
         netlifyIdentity.logout();
       });
+      container.appendChild(b3);
+      container.appendChild(cuponTXT);
+      
+
+      b3.innerText = 'Cupón';
+      b3.addEventListener('click', () => {
+        console.log("Click botón 3");
+        console.log("Valor TXT: ", cuponTXT.value);
+      });
+
     } else {
       logged.style.display = 'none';
       // if no one is logged in, show login/signup options
@@ -164,6 +181,7 @@
     // add the updated buttons back to the user info div
     container.appendChild(b1);
     container.appendChild(b2);
+    //container.appendChild(b3);
   };
 
   const loadSubscriptionContent = async (user) => {
