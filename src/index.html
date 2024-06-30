@@ -164,8 +164,23 @@
 
       b3.innerText = 'Cupón';
       b3.addEventListener('click', () => {
-        console.log("Click botón 3");
-        console.log("Valor TXT: ", cuponTXT.value);
+        if(cuponTXT.value != ''){
+          console.log("Click botón 3");
+          console.log("Valor TXT: ", cuponTXT.value);
+          envioCupon(user, cuponTXT.value);
+          fetch('/.netlify/functions/cupon_descuento', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${user.token.access_token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((link) => {
+            window.location.href = link;
+          })
+          .catch((err) => console.error(err));
+
+        }
       });
 
     } else {
@@ -183,6 +198,34 @@
     container.appendChild(b2);
     //container.appendChild(b3);
   };
+
+  const envioCupon = async (user, ValorTXT) => {
+    console.log("Usuario: ", user.id, " Cupon: ", ValorTXT);
+    if (user) {
+      //logged.style.display = 'inline-block';
+      /*const b3 = button3.cloneNode(true);
+      b3.addEventListener('click', () => {*/
+        console.log("Deeeeeentro...................");
+        // TODO handle subscription management
+        /*fetch('/.netlify/functions/cupon_descuento', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${user.token.access_token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((link) => {
+            window.location.href = link;
+          })
+          .catch((err) => console.error(err));*/
+      /*});*/
+
+      console.log("Fin IF: ", user.id);
+    } else {
+      console.log("Else");
+    }
+
+  }
 
   const loadSubscriptionContent = async (user) => {
     const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
@@ -227,6 +270,7 @@
   const handleUserStateChange = (user) => {
     updateUserInfo(user);
     loadSubscriptionContent(user);
+    envioCupon(user);
   };
 
   netlifyIdentity.on('init', handleUserStateChange);
