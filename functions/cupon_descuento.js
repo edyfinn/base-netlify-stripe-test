@@ -2,9 +2,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const { queryStripeCliente } = require('./utils/fauna');
 
 //Aplica un descuento a una suscripción
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   //Usuario netlify
-  const { user } = context.clientContext;
+  const { user } = JSON.parse(event.body);
   console.log("Dentro ", user);
   /*const { user } = context.clientContext;
   console.log("usuario: ", user.sub);
