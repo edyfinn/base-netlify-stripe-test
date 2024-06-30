@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     customer: customer.id,
     items: [
       {
-        price: process.env.STRIPE_BASE_PLAN_TEST,
+        price: process.env.STRIPE_DEFAULT_PRICE_PLAN_TEST,
       },
     ],
     trial_period_days: 14,
