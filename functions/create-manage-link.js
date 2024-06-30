@@ -8,7 +8,7 @@ exports.handler = async (_event, context) => {
 
   //Enlace a web de pago.
   var enlace = await crearLinkManager(user.sub);
-
+  alert("Enlace: " + enlace);
   return {
     statusCode: 200,
     body: JSON.stringify(enlace.url),
@@ -19,7 +19,7 @@ exports.handler = async (_event, context) => {
 async function crearLinkManager(id_netlify) {
   //Recupera id del cliente en stripe con el id del cliente en netlify.
   const clienteID = await queryStripeCliente(id_netlify);
-  
+  alert("Creando Enlace: " + clienteID[0]);
   //Crea enlace de este cliente a la pagina de pago de stripe
   const link = await stripe.billingPortal.sessions.create({
     customer: clienteID[0],
