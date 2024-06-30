@@ -28,7 +28,7 @@ exports.handler = async (event) => {
 
 
   //Crea registro en faunaDB con netlifyID y stripeID.
-  //await queryCrearNetIDStripeID(user.id, customer.id);
+  await queryCrearNetIDStripeID(user.id, customer.id);
 
 
   return {

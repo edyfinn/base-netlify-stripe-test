@@ -1,18 +1,19 @@
 const faunaDB = require('faunadb');
 var q = faunaDB.query;
 
-/*exports.faunaConexion = async () => {
+exports.faunaConexion = async () => {
   var client = new faunaDB.Client({
     secret: process.env.FAUNA_SERVER_KEY_TEST,
-    domain: 'db.eu.fauna.com_TEST',
+    domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
 
   return client;
-}*/
+}
 
 exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
-  var clientFauna = new faunaDB.Client({
+  console.log("Fauna: " + process.env.FAUNA_BD_STRIPE_TEST)
+  /*var clientFauna = new faunaDB.Client({
     secret: process.env.FAUNA_BD_STRIPE_TEST,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
@@ -20,8 +21,8 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
 
   await clientFauna.query(
     q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
-  );
-
+  );*/
+  await console.log("Fin");
 }
 
 exports.queryStripeCliente = async (idNetlify) => {
