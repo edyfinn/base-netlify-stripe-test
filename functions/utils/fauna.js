@@ -18,9 +18,9 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
     scheme: 'https',
   });
 
-  /*await clientFauna.query(
+  await clientFauna.query(
     q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
-  );*/
+  );
   
 }
 
