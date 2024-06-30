@@ -3,7 +3,7 @@ var q = faunaDB.query;
 
 /*exports.faunaConexion = async () => {
   var client = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE_TEST,
+    secret: process.env.FAUNA_SERVER_KEY_TEST,
     domain: 'db.eu.fauna.com_TEST',
     scheme: 'https',
   });

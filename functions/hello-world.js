@@ -18,7 +18,7 @@ exports.handler = async () => {
 
     var client = new faunaDB.Client({
       secret: process.env.FAUNA_BD_STRIPE_TEST,
-      domain: 'db.eu.fauna.com_TEST',
+      domain: 'db.eu.fauna.com',
       scheme: 'https',
     });
 
@@ -72,7 +72,7 @@ async function getClienteStripe() {
   });
 
   const respuesta = await client.query(
-    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
+    q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyID_TEST'), 'ba31a0e6-dac9-425a-9b46-246dfd4e906f')))
   );
   //console.log(JSON.stringify(respuesta[0]))
   return respuesta;
