@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
 
   return {
     statusCode: 200,
-    body: "fin", //descuentoAplicado, //JSON.stringify(descuentoAplicado),
+    body: `fin`, //descuentoAplicado, //JSON.stringify(descuentoAplicado),
   };
 };
 

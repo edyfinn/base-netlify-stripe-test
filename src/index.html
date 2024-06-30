@@ -164,23 +164,19 @@
 
       b3.innerText = 'Cupón';
       b3.addEventListener('click', () => {
-        if(cuponTXT.value != ''){
-          console.log("Click botón 3");
-          console.log("Valor TXT: ", cuponTXT.value);
-          envioCupon(user, cuponTXT.value);
-          fetch('/.netlify/functions/cupon_descuento', {
+        console.log("Click botón 3");
+        // Aplica cupón
+        fetch('/.netlify/functions/cupon_descuento', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${user.token.access_token}`,
           },
         })
-          .then((res) => res.json())
-          /*.then((link) => {
+          /*.then((res) => res.json())
+          .then((link) => {
             window.location.href = link;
-          })*/
-          .catch((err) => console.error(err));
-
-        }
+          })
+          .catch((err) => console.error(err));*/
       });
 
     } else {
