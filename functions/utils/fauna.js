@@ -12,9 +12,8 @@ exports.faunaConexion = async () => {
 }
 
 exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
-  alert("Fauna: " + process.env.FAUNA_BD_STRIPE_TEST)
   var clientFauna = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE_TEST,
+    secret: process.env.FAUNA_BD_STRIPE_TEST_A,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
@@ -22,7 +21,7 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
   /*await clientFauna.query(
     q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
   );*/
-  alert("Fin");
+  
 }
 
 exports.queryStripeCliente = async (idNetlify) => {
