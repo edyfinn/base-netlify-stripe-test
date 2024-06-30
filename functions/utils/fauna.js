@@ -12,17 +12,17 @@ exports.faunaConexion = async () => {
 }
 
 exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
-  console.log("Fauna: " + process.env.FAUNA_BD_STRIPE_TEST)
-  /*var clientFauna = new faunaDB.Client({
+  alert("Fauna: " + process.env.FAUNA_BD_STRIPE_TEST)
+  var clientFauna = new faunaDB.Client({
     secret: process.env.FAUNA_BD_STRIPE_TEST,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
 
-  await clientFauna.query(
+  /*await clientFauna.query(
     q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
   );*/
-  await console.log("Fin");
+  alert("Fin");
 }
 
 exports.queryStripeCliente = async (idNetlify) => {
