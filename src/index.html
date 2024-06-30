@@ -172,7 +172,9 @@
             Authorization: `Bearer ${user.token.access_token}`,
           },
         })
-          .then((res) => res)
+          .then((res) => {
+            console.log("respuesta: ", res);
+          })
           /*.then((link) => {
             window.location.href = link;
           })*/
