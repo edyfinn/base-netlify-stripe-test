@@ -3,7 +3,7 @@ var q = faunaDB.query;
 
 exports.faunaConexion = async () => {
   var client = new faunaDB.Client({
-    secret: process.env.FAUNA_SERVER_KEY_TEST,
+    secret: process.env.FAUNA_BD_STRIPE_TEST_A,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
@@ -26,7 +26,7 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
 
 exports.queryStripeCliente = async (idNetlify) => {
   var clientFauna = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE_TEST,
+    secret: process.env.FAUNA_BD_STRIPE_TEST_A,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
@@ -41,7 +41,7 @@ exports.queryStripeCliente = async (idNetlify) => {
 
 exports.querySesionCliente = async (idNetlify) => {
   var clientFauna = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE_TEST,
+    secret: process.env.FAUNA_BD_STRIPE_TEST_A,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
