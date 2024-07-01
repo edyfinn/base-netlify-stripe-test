@@ -11,6 +11,7 @@ exports.faunaConexion = async () => {
   return client;
 }
 
+//Crea tupla en usuarios para relacionar los stripeID con los netlifyID
 exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
   var clientFauna = new faunaDB.Client({
     secret: process.env.FAUNA_BD_STRIPE_TEST_A,
@@ -19,11 +20,12 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
   });
 
   await clientFauna.query(
-    q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 1 } })
+    q.Create(q.Collection('UsuariosBuenosTest'), { data: { netlifyID: idNet , stripeID: idSprite, sesion: 0 } })
   );
   
 }
 
+//Recupera stripeID con netlifyID del logeo
 exports.queryStripeCliente = async (idNetlify) => {
   var clientFauna = new faunaDB.Client({
     secret: process.env.FAUNA_BD_STRIPE_TEST_A,
@@ -31,6 +33,7 @@ exports.queryStripeCliente = async (idNetlify) => {
     scheme: 'https',
   });
 
+  //console.log("Net: ", idNetlify);
   const respuesta = await clientFauna.query(
     q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), idNetlify)))
   );
