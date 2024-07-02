@@ -1,6 +1,11 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const { queryStripeCliente } = require('./utils/fauna');
 
+var response = {
+  statusCode: 200,
+  body: "",
+};
+
 //Aplica un descuento a una suscripción
 exports.handler = async (event, context) => {
   //Usuario netlify
@@ -12,11 +17,14 @@ exports.handler = async (event, context) => {
   console.log("usuario: ", user.sub);
   var descuentoAplicado = await descuentoSubs(user.sub);*/
   var resultadoDes = await descuentoSubs(user.sub, cupontTXT);
-
-  return {
+  console.log("Resultado directo: ", resultadoDes.body.message);
+  response.body = resultadoDes.body.message;
+  console.log("Resultado completo: ", response);
+  return response;
+  /*return {
     statusCode: 200,
-    body: JSON.stringify(resultadoDes),
-  };
+    data: JSON.stringify({msg: "SUCCESS"})
+  };*/
 };
 
 
@@ -35,29 +43,7 @@ async function descuentoSubs(id_netlify, cupon) {
   });
 
   console.log("Suspcripción: ", subscription);
-  // Check if there's a subscription found
-  if (subscription.data.length > 0) {
-    const subscriptionData = subscription.data[0];
-    // Check the status of the subscription
-    if (subscriptionData.status === 'active') {
-        // Subscription is active
-        console.log('Subscription is active.');
-        //return 'pagado'; // Return 'pagado' for active subscription
-    } else if (subscriptionData.status === 'trialing') {
-        // Subscription is in trial period
-        console.log('Subscription is in trial period.');
-        //return 'prueba'; // Return 'prueba' for trial subscription
-    } else {
-        // Subscription is not active or in trial
-        console.log('Subscription is not active or in trial period.');
-       // return false; // Return false for other subscription statuses
-    }
-  } else {
-      // No subscription found for the customer
-      console.log('No subscription found for the customer.');
-      //return false; // Return false if no subscription is found
-  }
-
+  
   console.log("ID sub: ", subscription.data[0].id);
   /*const stripe = require('stripe')('sk_test_51OXmGhGAVjNy5dcWqdTRW9E1Eh3MyAspCBVlYYRiZQISneBAcRK0MC1c4WNBYwJbnhRuO4X8l1kwTeWaLpXamVb200Z0n4lQK8');
   
@@ -77,6 +63,7 @@ async function descuentoSubs(id_netlify, cupon) {
   /*console.log("cuponTXT: ", JSON.parse(cupon));
   console.log(cupon === 'Friends20'); // true
   */
+ 
   if(JSON.parse(cupon) == "Friends20"){
     const subscriptionU = await stripe.subscriptions.update(
       subscription.data[0].id,
@@ -88,13 +75,26 @@ async function descuentoSubs(id_netlify, cupon) {
         ],
       }
     );
-
     console.log("cuponazo: ", subscription.data[0].discounts);
+    
+    return {
+      statusCode: 200,
+      body: {
+        message: `Esto va muy bien :)`,
+        sub: subscriptionU.id
+      },
+    };
+    
   } else {
     console.log("cuponazo else: ", subscription.data[0].discounts);
   }
 
   console.log("Descuento: ", subscription.data[0].discounts);
 
-  return "Descuento";
+  /*return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Esto va muy bien :)`,}),
+  };*/
+
 }

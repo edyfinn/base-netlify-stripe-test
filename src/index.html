@@ -164,6 +164,17 @@
 
       b3.innerText = 'Cupón';
       b3.addEventListener('click', () => {
+        
+         /*fetch('/.netlify/functions/cupon_descuento', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${user.token.access_token}`,
+          },
+          body: JSON.stringify(cuponTXT.value),
+        })
+          .then(response => console.log("respuesta: ", response))
+          .then(obj => console.log("Datos: ", obj));*/
+
         //console.log("Click botón 3, usuario: ", user.id, " CuponTXT: ", cuponTXT.value);
         // Aplica cupón
         fetch('/.netlify/functions/cupon_descuento', {
@@ -173,12 +184,19 @@
           },
           body: JSON.stringify(cuponTXT.value),
         })
-          .then((res) => {
-            console.log("respuesta: ", res);
+          .then((response) => {
+            console.log("respuesta: ", response.status);
+            if(response.status === 200){
+              alert("Cupón descuento, ¡Aplicado!");
+            } else {
+              alert("Código Cupón no es correcto.");
+            }
           })
-          /*.then((link) => {
-            window.location.href = link;
-          })*/
+          .then((data) => {
+            console.log("subscriptionU: ", data);
+            let datos = data;
+            console.log("Datos: ", datos );
+          })
           .catch((err) => console.error(err));
       });
 
@@ -197,34 +215,6 @@
     container.appendChild(b2);
     //container.appendChild(b3);
   };
-
-  const envioCupon = async (user, ValorTXT) => {
-    console.log("Usuario: ", user.id, " Cupon: ", ValorTXT);
-    if (user) {
-      //logged.style.display = 'inline-block';
-      /*const b3 = button3.cloneNode(true);
-      b3.addEventListener('click', () => {*/
-        console.log("Deeeeeentro...................");
-        // TODO handle subscription management
-        /*fetch('/.netlify/functions/cupon_descuento', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${user.token.access_token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((link) => {
-            window.location.href = link;
-          })
-          .catch((err) => console.error(err));*/
-      /*});*/
-
-      console.log("Fin IF: ", user.id);
-    } else {
-      console.log("Else");
-    }
-
-  }
 
   const loadSubscriptionContent = async (user) => {
     const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
@@ -269,7 +259,6 @@
   const handleUserStateChange = (user) => {
     updateUserInfo(user);
     loadSubscriptionContent(user);
-    envioCupon(user);
   };
 
   netlifyIdentity.on('init', handleUserStateChange);
