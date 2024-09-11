@@ -10,23 +10,29 @@ exports.handler = async (event) => {
   const customer = await stripe.customers.create({ name: user.user_metadata.full_name, email: user.email, });
 
   // subscribe the new customer to the plan con 14 días de prueba
-  const session = await stripe.checkout.sessions.create
-  ({
-    line_items: [
+  await stripe.subscriptions.create({
+    customer: customer.id,
+    customer_update: {
+    address: 'DE',
+    },
+    items: [
       {
-        price: '{{PRICE_ID}}',
-        quantity: 1,
+        price: process.env.STRIPE_DEFAULT_PRICE_PLAN_TEST,
       },
     ],
     automatic_tax: {
-      enabled: true,
-    },
-    mode: 'subscription',
-    ui_mode: 'embedded',
-    return_url
-  : 'https://example.com/return',
-  });
+        enabled: true,
+      },
 
+    trial_period_days: 14,
+    trial_settings:
+     {
+      end_behavior: {
+        missing_payment_method: 'pause'
+      }
+    },
+    
+  });
 
 
   //Crea registro en faunaDB con netlifyID y stripeID.
