@@ -12,17 +12,11 @@ exports.handler = async (event) => {
   // subscribe the new customer to the plan con 14 días de prueba
   await stripe.subscriptions.create({
     customer: customer.id,
-    address:{ country:'DE',
-    },
     items: [
       {
         price: process.env.STRIPE_DEFAULT_PRICE_PLAN_TEST,
       },
     ],
-    automatic_tax: {
-        enabled: true,
-      },
-
     trial_period_days: 14,
     trial_settings:
      {
@@ -30,7 +24,6 @@ exports.handler = async (event) => {
         missing_payment_method: 'pause'
       }
     },
-    
   });
 
 
