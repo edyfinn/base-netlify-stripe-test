@@ -12,8 +12,7 @@ exports.handler = async (event) => {
   // subscribe the new customer to the plan con 14 días de prueba
   await stripe.subscriptions.create({
     customer: customer.id,
-    customer_update: {
-    address: 'DE',
+    address:{ country:'DE',
     },
     items: [
       {
