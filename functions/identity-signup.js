@@ -17,6 +17,11 @@ exports.handler = async (event) => {
         price: process.env.STRIPE_DEFAULT_PRICE_PLAN_TEST,
       },
     ],
+    automatic_tax
+    : {
+        enabled
+    : true,
+    },
     trial_period_days: 14,
     trial_settings:
      {
