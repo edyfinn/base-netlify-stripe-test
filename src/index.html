@@ -2,6 +2,7 @@
 
 <div class="container">
   <div class="left">
+
     <h1>Here you can manage your subscription</h1>
     <h2>If you have any further questions always feel free to contact us!</h2>
 
@@ -55,6 +56,26 @@
       <button class="outline" id="right">Sign Up</button>
       <button id="cupon">Cupon</button>
       <input type="text" id="cupontxt"></input>
+      <!-- INICIO LINK-------------------- -->
+    <div class="sr-main">
+      <h1>Accept a payment</h1>
+
+      <form id="payment-form">
+        <h3>Contact info</h3>
+        <div id="link-authentication-element"></div>
+
+        <h3>Shipping</h3>
+        <div id="shipping-address-element"></div>
+
+        <h3>Payment</h3>
+        <div id="payment-element"></div>
+
+        <button id="submit-link">Pay</button>
+      </form>
+
+      <div id="messages"></div>
+    </div>
+    <!-- END LINK----------------------- -->
     </div>
   </div>
   <div class="right">
@@ -110,11 +131,15 @@
 </script>
 
 <script>
+  
   const button1 = document.getElementById('left');
   const button2 = document.getElementById('right');
   const button3 = document.getElementById('cupon');
   const cuponTXT = document.getElementById('cupontxt');
   const logged = document.getElementById('logged-container');
+
+  const paymentForm = document.getElementById('payment-form');
+  const buttonPay = document.getElementById('submit-link');
 
   const login = () => netlifyIdentity.open('login');
   const signup = () => netlifyIdentity.open('signup');
@@ -123,7 +148,6 @@
   button1.addEventListener('click', login);
   button2.addEventListener('click', signup);
   //button3.addEventListener('click', signup);
-  
 
   const updateUserInfo = (user) => {
     const container = document.querySelector('.user-info');
@@ -132,6 +156,8 @@
     const b1 = button1.cloneNode(true);
     const b2 = button2.cloneNode(true);
     const b3 = button3.cloneNode(true);
+    //const botonPay = buttonPay.cloneNode(true);
+    const formula = paymentForm.cloneNode(true);
 
     // empty the user info div
     container.innerHTML = '';
@@ -160,8 +186,10 @@
       });
       container.appendChild(b3);
       container.appendChild(cuponTXT);
-      
 
+      container.appendChild(formula);
+      container.appendChild(buttonPay);
+      
       b3.innerText = 'Cupón';
       b3.addEventListener('click', () => {
         
@@ -199,6 +227,28 @@
           })
           .catch((err) => console.error(err));
       });
+
+      buttonPay.addEventListener('click', () => {
+        fetch('/.netlify/functions/hello-world', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${user.token.access_token}`,
+          },
+          body: JSON.stringify(cuponTXT.value),
+        })
+          .then((response) => {
+            console.log("respuesta: ", JSON.stringify(response));
+            if(response.status === 200){
+              alert("Respuesta correcta " + response.body);
+            } else {
+              alert("Respuesta incorrecta");
+            }
+          })
+          .then((data) => {
+            console.log("Datos: ", datos );
+          })
+          .catch((err) => console.error(err));
+       });
 
     } else {
       logged.style.display = 'none';
