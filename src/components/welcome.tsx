@@ -32,16 +32,17 @@ function Welcome() {
             <header className="App-header">
             <div className="right">
                 <img src = {edyFlowLogoSmall} alt="Subscription Image" />
-            </div>                
+            </div>
+                <button onClick={goToHome}>
+                    go to Home
+                </button>        
                 <button onClick={goToPayment}>
                     go to Payment
                 </button>
                 <button onClick={goToDashboard}>
                     go to Dashboard
                 </button>
-                <button onClick={goToHome}>
-                    go to Home
-                </button>
+                
             <div id="logged-container">
       {/*<!--column 1 zxp--> */}
       <div className="column">

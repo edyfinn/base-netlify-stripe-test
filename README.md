@@ -2,7 +2,6 @@ NUEVA WEB REACTIVA
 -------------------------------------------------
 # Cambios en la Config de Netlify para Reactivo
 
-
 Netlify -> Deploys-> Build settings
 
 ## *Build command: CI= react-scripts build
@@ -13,7 +12,13 @@ Funciona en local: npm run build
 ## *Publish directory: build
 No funciona en local: build
 Funciona en local: _site
+
+# VARIABLES GLOBALES
+Tiene que añadirse "REACT_" de esta forma "REACT_STRIPE_DEFAULT_PRICE_PLAN_TEST"
+
 -------------------------------------------------
+
+
 ## Install
 
 ```bash

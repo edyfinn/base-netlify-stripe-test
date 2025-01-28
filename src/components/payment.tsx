@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {Elements} from '@stripe/react-stripe-js';
-import CheckoutForm from './checkoutform'
+import CheckoutForm from './checkoutform';
 import imagen1 from './images/231127_FeatureImage_11.png';
 //import netlifyIdentity from 'netlify-identity-widget';
 
@@ -46,16 +46,17 @@ function Payment(props: { stripePromise: any; }) {
     <div className="container">
       <h1>EdyFlow</h1>
       <p>The Subs Plugin:  <strong>USD 24.0</strong></p>
-     {/*  {clientSecret && !loading && stripePromise && (
-        <Elements stripe={stripePromise} options={{ clientSecret, appearance, fonts, customerOptions }}>
-          <CheckoutForm />
-        </Elements>
-      )} */}
+      {clientSecret && !loading && stripePromise && (
+          // <Elements stripe={stripePromise} options={{ clientSecret, appearance, fonts, customerOptions }}></Elements>
+          <Elements stripe={stripePromise} options={{ clientSecret, fonts}}>
+            <CheckoutForm />
+          </Elements>
+        )}
         <div>
             <Link to="/home">go Home</Link>
             <Link to="/">
                 <button onClick={() => {/*se puede ejecutar algo*/}} > go Welcome </button>
-                </Link>
+            </Link>
         </div>
     </div>
 
