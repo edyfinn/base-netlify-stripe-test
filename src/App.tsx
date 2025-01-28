@@ -117,7 +117,7 @@ const handleLogIn  = () => {
                       <Route path="/dashboard"
                           element={<Dashboard />} />
                       <Route path="/home"
-                          element={<Home usuarioNetlify={identity.user?.token.access_token}/>} />
+                          element={<Home usuarioNetlify={identity.user?.token.access_token} usuarioN={identity.user?.id}/>} />
                       <Route path="/"
                           element={<Welcome />} />
                     </Routes>
