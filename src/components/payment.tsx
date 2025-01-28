@@ -45,14 +45,17 @@ function Payment(props: { stripePromise: any; }) {
     <>
     <div className="container">
       <h1>EdyFlow</h1>
-      <p>The Subs Plugins: <strong>USD 24.0</strong></p>
+      <p>The Subs Plugin:  <strong>USD 24.0</strong></p>
      {/*  {clientSecret && !loading && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret, appearance, fonts, customerOptions }}>
           <CheckoutForm />
         </Elements>
       )} */}
         <div>
-            <Link to="/">go Home</Link>
+            <Link to="/home">go Home</Link>
+            <Link to="/">
+                <button onClick={() => {/*se puede ejecutar algo*/}} > go Welcome </button>
+                </Link>
         </div>
     </div>
 
