@@ -4,9 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import edyFlowLogoSmall from "../images/230728-edyflow-Logo-colordark-small.png";
 
 function Home(full_parametros: any) {
+    const [cuponDes, setCuponDes] = useState('cuponazo');
     const navigate = useNavigate();
 
-    console.log("Datos llegan ", full_parametros);
+    const handleCuponChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        console.log("Cuponazo: ", e.target.value);
+        setCuponDes(e.target.value);
+      };
+
+    //console.log("Datos llegan ", full_parametros);
     /*try{
         const result = await fetch(
             '/.netlify/functions/create-manage-link',
@@ -60,10 +66,8 @@ function Home(full_parametros: any) {
 
     const goToManage = () => {
         console.log("Manage Subscription, Click.");
-        //console.log("La IDENTIDAD --> ", JSON.stringify(usuarioNetlify));
-        console.log("Token del Usuario --> ", full_parametros);
-
-        //apiCallTest(full_parametros);
+        //console.log("Token del Usuario --> ", full_parametros);        
+        
         // HANDLE subscription management
         fetch(`/.netlify/functions/create-manage-link?idNetlify=${full_parametros.usuarioNetlify}&tokenUser=${full_parametros.usuarioToken}`, {
           method: 'POST',
@@ -78,6 +82,60 @@ function Home(full_parametros: any) {
           })
           .catch((err) => console.error("¡¡ERROR!! llamando a create-manage-link: ", err));
           
+          /**PRUEBA
+          window.location.href = JSON.stringify(apiCallTest(full_parametros));*/
+          
+    };
+
+    const goToCupon = () => {
+        // HANDLE cuponazo
+        fetch(`/.netlify/functions/cupon_descuento`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${full_parametros.usuarioToken}`,
+            },
+            body: JSON.stringify(cuponDes),
+          })
+            .then((response) => {
+            console.log("respuesta: ", response.status);
+            if(response.status === 200){
+                alert("Cupón descuento, ¡Aplicado!");
+            } else {
+                alert("Código Cupón no es correcto.");
+            }
+            })
+            .then((data: any) => {
+            console.log("subscriptionU: ", data);
+            let datos = data;
+            console.log("Datos: ", datos );
+            })
+            .catch((err: any) => console.error("¡¡ERROR!! llamando a create-manage-link: ", err));
+            
+            /*b3.innerText = 'Cupón';
+            b3.addEventListener('click', () => {
+              // Aplica cupón
+              fetch('/.netlify/functions/cupon_descuento', {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${user.token.access_token}`,
+                },
+                body: JSON.stringify(cuponTXT.value),
+              })
+                .then((response) => {
+                  console.log("respuesta: ", response.status);
+                  if(response.status === 200){
+                    alert("Cupón descuento, ¡Aplicado!");
+                  } else {
+                    alert("Código Cupón no es correcto.");
+                  }
+                })
+                .then((data) => {
+                  console.log("subscriptionU: ", data);
+                  let datos = data;
+                  console.log("Datos: ", datos );
+                })
+                .catch((err) => console.error(err));
+            });*/
     };
 
     const goToHome = () => {
@@ -103,6 +161,7 @@ function Home(full_parametros: any) {
                   }
             );
             const data = await response.json();
+            console.log("Link ", data);
             return data;
         } catch (err) {
             console.log(err);
@@ -129,6 +188,16 @@ function Home(full_parametros: any) {
 
                     <div>
                         <p>Home</p>
+                        <input
+                            type="text"
+                            id="cupontxt"
+                            value={cuponDes}
+                            onChange={handleCuponChange}
+                        />
+                        <input type="text" id="cupontxt"></input> 
+                        <button onClick={goToCupon}>
+                            Cupón
+                        </button> 
                         <button onClick={goToManage}>
                             Manage Subscription
                         </button> 
@@ -143,3 +212,45 @@ function Home(full_parametros: any) {
 }
 
 export default Home;
+
+/*
+  try{
+      const result = await fetch(
+          process.env.REACT_APP_GRAPHQL_ENDPOINT,
+          {
+              method: 'POST',
+              headers: {'Authorization': `Bearer ${process.env.REACT_APP_GRAPHQL_API_KEY}`},
+              body: JSON.stringify({
+                  query: `query {
+                      getProductList{
+                          items{
+                              price
+                              name
+                              _id
+                              image{
+                                  sourceUrl
+                              }
+                          }
+                      }
+                  }
+                  `
+              }),
+          }
+      )
+      const resultJSON = await result.json();
+      /**
+       * Must return an object with a statusCode
+       * and a body
+       */
+    /*  return {
+          statusCode: 200,
+          body: JSON.stringify(resultJSON)
+      }
+  } catch (err) {
+      return {
+          statusCode: 500,
+          body: JSON.stringify({
+              message: `Failed to fetch. ${err}`
+          })
+      }
+  }*/
