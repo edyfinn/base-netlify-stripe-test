@@ -28,16 +28,17 @@ exports.queryCrearNetIDStripeID = async (idNet, idSprite) => {
 //Recupera stripeID con netlifyID del logeo
 exports.queryStripeCliente = async (idNetlify) => {
   var clientFauna = new faunaDB.Client({
-    secret: process.env.FAUNA_BD_STRIPE_TEST_A,
+    secret: process.env.REACT_FAUNA_BD_STRIPE_TEST_A,
     domain: 'db.eu.fauna.com',
     scheme: 'https',
   });
 
-  //console.log("Net: ", idNetlify);
+  console.log("Net: ", idNetlify);
   const respuesta = await clientFauna.query(
     q.Select('data', q.Paginate(q.Match(q.Index('getUsuarioNetlifyIDTEST'), idNetlify)))
   );
 
+  console.log("idSpriteFauna ", respuesta);
   //clientFauna.close();
   return respuesta;
 }

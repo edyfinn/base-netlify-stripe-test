@@ -1,21 +1,26 @@
 const stripe = require('stripe')(process.env.REACT_STRIPE_SECRET_KEY_TEST);
 const { queryStripeCliente } = require('./utils/fauna');
 
-exports.handler = async (_event, context) => {
+exports.handler = async (paramHomeNetlify) => {
   console.log("create-manage-link INICIO-------------------------------------");
-  console.log("datos ", context);
+  console.log("Todos Parametros Datos --------------------------------------- \n", paramHomeNetlify);
+  console.log("Parametros que llegan --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters);
+  console.log("Parametro 1 --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters.idNetlify);
+  console.log("Parametro 2 --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters.tokenUser);
+  //console.log("tokenUser ", paramHomeNetlify);
   //Usuario netlify
   //const { user } = context.clientContext;
-  const { user } = context.awsRequestId;
+  const user = paramHomeNetlify.multiValueQueryStringParameters.idNetlify;
+  console.log("El user ", user);
   var idSprite = await queryStripeCliente(user);
   console.log("SpriteID ", idSprite);
-  var stripeIDString = JSON.stringify(idSprite);
+  /*var stripeIDString = JSON.stringify(idSprite);
   console.log("datos ", stripeIDString);
   //Enlace a web de pago.
-  var enlace = await crearLinkManager(stripeIDString);
+  var enlace = await crearLinkManager(stripeIDString);*/
   return {
     statusCode: 200,
-    body: JSON.stringify(enlace.url),
+    //body: JSON.stringify(enlace.url),
   };
 }
   /*
@@ -78,6 +83,7 @@ exports.handler = async (_event, context) => {
 
 
 async function crearLinkManager(id_netlify) {
+  console.log("ID Net ", id_netlify);
   //Recupera id del cliente en stripe con el id del cliente en netlify.
   const clienteID = await queryStripeCliente(id_netlify);
   console.log("Creando Enlace para: ", clienteID[0]);

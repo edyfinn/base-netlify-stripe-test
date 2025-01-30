@@ -3,10 +3,10 @@ import { useEffect, useState, useRef, createContext, memo } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import edyFlowLogoSmall from "../images/230728-edyflow-Logo-colordark-small.png";
 
-function Home(usuarioToken: any, usuarioN: any) {
+function Home(full_parametros: any) {
     const navigate = useNavigate();
 
-    console.log("Datos llegan ", usuarioN, " ", usuarioToken);
+    console.log("Datos llegan ", full_parametros);
     /*try{
         const result = await fetch(
             '/.netlify/functions/create-manage-link',
@@ -61,14 +61,14 @@ function Home(usuarioToken: any, usuarioN: any) {
     const goToManage = () => {
         console.log("Manage Subscription, Click.");
         //console.log("La IDENTIDAD --> ", JSON.stringify(usuarioNetlify));
-        console.log("Token del Usuario --> ", usuarioToken);
+        console.log("Token del Usuario --> ", full_parametros);
 
-        apiCallTest(usuarioToken);
+        //apiCallTest(full_parametros);
         // HANDLE subscription management
-        fetch('/.netlify/functions/create-manage-link', {
+        fetch(`/.netlify/functions/create-manage-link?idNetlify=${full_parametros.usuarioNetlify}&tokenUser=${full_parametros.usuarioToken}`, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${usuarioToken}`,
+            Authorization: `Bearer ${full_parametros.usuarioToken}`,
           },
         })
           .then((res) => res.json())
@@ -90,15 +90,15 @@ function Home(usuarioToken: any, usuarioN: any) {
         navigate('/main');
     };
 
-    async function apiCallTest(parameter: any) {
-        console.log("Usuario ", parameter.usuarioN);
-        const url = `/.netlify/functions/create-manage-link?parameter=${parameter}`;
+    async function apiCallTest(parametros: any) {
+        console.log("Usuario en Home ", parametros.usuarioNetlify);
+        const url = `/.netlify/functions/create-manage-link?idNetlify=${parametros.usuarioNetlify}&tokenUser=${parametros.usuarioToken}`;
         try {
             const response = await fetch(url,
                 {
                     method: 'POST',
                     headers: {
-                      Authorization: `Bearer ${usuarioToken}`,
+                      Authorization: `Bearer ${parametros.usuarioToken}`,
                     },
                   }
             );
