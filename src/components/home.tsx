@@ -73,8 +73,8 @@ function Home(full_parametros: any) {
         })
           .then((res) => res.json())
           .then((link) => {
-            navigate(link)
-            //window.location.href = link;
+            //navigate(link)
+            window.location.href = link;
           })
           .catch((err) => console.error("¡¡ERROR!! llamando a create-manage-link: ", err));
           

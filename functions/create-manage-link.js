@@ -12,15 +12,15 @@ exports.handler = async (paramHomeNetlify) => {
   //const { user } = context.clientContext;
   const user = paramHomeNetlify.multiValueQueryStringParameters.idNetlify;
   console.log("El user ", user);
-  var idSprite = await queryStripeCliente(user);
+  /*var idSprite = await queryStripeCliente(user);
   console.log("SpriteID ", idSprite);
-  /*var stripeIDString = JSON.stringify(idSprite);
-  console.log("datos ", stripeIDString);
+  var stripeIDString = idSprite;//JSON.stringify(idSprite);
+  console.log("datos ", stripeIDString);*/
   //Enlace a web de pago.
-  var enlace = await crearLinkManager(stripeIDString);*/
+  var enlace = await crearLinkManager(user);
   return {
     statusCode: 200,
-    //body: JSON.stringify(enlace.url),
+    body: JSON.stringify(enlace.url),
   };
 }
   /*
