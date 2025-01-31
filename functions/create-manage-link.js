@@ -1,14 +1,16 @@
 const stripe = require('stripe')(process.env.REACT_STRIPE_SECRET_KEY_TEST);
 const { queryStripeCliente } = require('./utils/fauna');
 
-exports.handler = async (paramHomeNetlify) => {
+exports.handler = async (paramHomeNetlify, event, context) => {
   console.log("create-manage-link INICIO-------------------------------------");
   //console.log("Todos Parametros Datos --------------------------------------- \n", paramHomeNetlify);
   //console.log("Parametros que llegan --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters);
   //console.log("Parametro 1 --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters.idNetlify);
   //console.log("Parametro 2 --------------------------------------\n ", paramHomeNetlify.multiValueQueryStringParameters.tokenUser);
-  
-  //Usuario netlify
+  //console.log("Evento ", event.clientContext.user.sub);
+  //console.log("Contexto ", context);
+  //Usuario netlify se puede tomar del event y el token también
+  //const user = event.clientContext.user.sub;
   const user = paramHomeNetlify.multiValueQueryStringParameters.idNetlify;
   //console.log("El user ", user);
   //Enlace a web de pago.

@@ -4,13 +4,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import edyFlowLogoSmall from "../images/230728-edyflow-Logo-colordark-small.png";
 
 function Home(full_parametros: any) {
-    const [cuponDes, setCuponDes] = useState('cuponazo');
+    const [cuponDes, setCuponDes] = useState('');
     const navigate = useNavigate();
 
     const handleCuponChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        console.log("Cuponazo: ", e.target.value);
+        console.log("Cupon: ", e.target.value);
         setCuponDes(e.target.value);
-      };
+    };
+
+    const handleCuponClick = (cuponTXT: string) => {
+        console.log("CuponazoClick: ", cuponTXT);
+        setCuponDes(cuponTXT);
+    };
 
     //console.log("Datos llegan ", full_parametros);
     /*try{
@@ -88,8 +93,9 @@ function Home(full_parametros: any) {
     };
 
     const goToCupon = () => {
+        console.log("Cupón: ", cuponDes);
         // HANDLE cuponazo
-        fetch(`/.netlify/functions/cupon_descuento`, {
+        fetch(`/.netlify/functions/cupon_descuento?CuponDes=${cuponDes}`, {
             method: 'POST',
             headers: {
               Authorization: `Bearer ${full_parametros.usuarioToken}`,
@@ -98,18 +104,18 @@ function Home(full_parametros: any) {
           })
             .then((response) => {
             console.log("respuesta: ", response.status);
-            if(response.status === 200){
+            if(response.status === 200) {
                 alert("Cupón descuento, ¡Aplicado!");
             } else {
                 alert("Código Cupón no es correcto.");
             }
             })
-            .then((data: any) => {
+            /*.then((data: any) => {
             console.log("subscriptionU: ", data);
             let datos = data;
             console.log("Datos: ", datos );
             })
-            .catch((err: any) => console.error("¡¡ERROR!! llamando a create-manage-link: ", err));
+            .catch((err: any) => console.error("¡¡ERROR!! llamando a cupon_descuento: ", err));*/
             
             /*b3.innerText = 'Cupón';
             b3.addEventListener('click', () => {
@@ -190,11 +196,9 @@ function Home(full_parametros: any) {
                         <p>Home</p>
                         <input
                             type="text"
-                            id="cupontxt"
                             value={cuponDes}
                             onChange={handleCuponChange}
-                        />
-                        <input type="text" id="cupontxt"></input> 
+                        /> 
                         <button onClick={goToCupon}>
                             Cupón
                         </button> 
