@@ -17,7 +17,8 @@ Funciona en local: _site
 Tiene que añadirse "REACT_" de esta forma "REACT_STRIPE_DEFAULT_PRICE_PLAN_TEST"
 
 -------------------------------------------------
-
+# LIB NODE
+No es necesario instalar dotenv, ya esta incluido en react solo hay que usarlo.
 
 ## Install
 

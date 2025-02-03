@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import edyFlowLogoSmall from "./images/230728-edyflow-Logo-colordark-small.png";
 import './App.css';
@@ -21,6 +21,18 @@ import Main from "./main";
 import Private from "./components/private";
 //import { LogIn } from './views';
 
+import {loadStripe} from '@stripe/stripe-js';
+import path from 'path';
+//const env = require('dotenv').config({path: './.env'});
+
+//console.log(require('dotenv').config());
+
+//const env2 = require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+//import dotenv from 'dotenv';
+
+//import { config } from 'dotenv';
+
+
 interface Props {
   component: React.FunctionComponent;
   exact?: boolean;
@@ -37,12 +49,25 @@ const PrivateRoute: React.FunctionComponent<Props> = (props: Props) => {
   return isLoggedIn ? <Route {...props} /> : <Link to="/welcome" />;
 };
 
+const stripeSI = loadStripe('pk_test_51OXmGhGAVjNy5dcWXyIWRd1QmpfAWfscWkQTPsewPh2EVDteGRkA5CnTfekMUrfoiiSdcvOElaBOtGs0XIDA4Qof00CpVKEzgQ');
+
+const stripe = require('stripe')(JSON.stringify(process.env.REACT_APP_WEB_STRIPE_PUBLISHABLE_KEY), {
+  apiVersion: '2024-10-28.acacia',
+});
+
 function App() {
   
   //const navigate = useNavigate();
   const url = 'https://thesubstest.netlify.app/';
-  var isauth = false;
 
+  //config({ path: path.resolve(__dirname, '..', '.env') });
+  //dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
+  //dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
+  //console.log(process.env.REACT_STRIPE_SECRET_KEY_TEST);
+  
+  ////CORRECTO DOTENV ESTA AÑADIDO EN REACTIVO NO HACE FALTA INSTALARLO
+  // console.log("EL ENV", process.env.REACT_APP_STRIPE_SECRET_KEY_TEST);
+  
   return (
     <IdentityContextProvider url={url}>      
       {/*<Router>
@@ -81,6 +106,23 @@ function AuthStatusView() {
     (identity && identity.user && identity.user.user_metadata && identity.user.user_metadata.full_name) || 'NoName';
   const avatar_url = identity && identity.user && identity.user.user_metadata && identity.user.user_metadata.avatar_url;
 
+  const [ stripePromise, setStripePromise ] = useState(null);
+  
+  /** ESTO RECIVE LA PROMESA DE CONEXIÓN CON SPRITE PERO NO NOS HACE FALTA */
+  /*var passKey = process.env.REACT_APP_STRIPE_SECRET_KEY_TEST
+  var passKeyTXT = JSON.stringify(passKey);
+  console.log("passKeyTXT ", passKey);
+  const StripePromesa = loadStripe(passKeyTXT, {
+    apiVersion: '2024-10-28.acacia'
+  });
+  console.log("StripePromesa ", StripePromesa,  " EL Stripe ", stripe);*/
+  
+  //console.log("Sprite ", stripe);
+  useEffect(() => {
+    setStripePromise(stripe);
+    console.log("StriteAPI ", stripePromise);
+  }, []);
+
 
 function Logout() {
   //console.log("Sesion user: " + userLogin);
@@ -113,7 +155,10 @@ const handleLogIn  = () => {
                 <>
                 <Router>
                   <Routes>
-                  <Route path="/payment" element={identity.isLoggedIn ? <Payment stripePromise={undefined}/> : <Navigate to="/Home"  />}/>
+                  <Route path="/payment" element={identity.isLoggedIn ? <Payment stripePromise={stripeSI} 
+                                                                                 usuarioNetlify={identity.user?.id}
+                                                                                 usuarioToken={identity.user?.token.access_token} />
+                                                                                  : <Navigate to="/Home"  />}/>
                       <Route path="/dashboard"
                           element={<Dashboard />} />
                       <Route path="/home"
