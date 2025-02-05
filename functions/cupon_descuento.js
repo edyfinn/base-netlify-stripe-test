@@ -7,19 +7,23 @@ var response = {
 };
 
 //Aplica un descuento a una suscripción
-exports.handler = async (event, context) => {
+exports.handler = async (paramCupon, event) => {
   //Usuario netlify
-  const { user } = context.clientContext;
-  console.log("Dentro ", user.sub);
-  console.log("ValorCupon: ", event.body);
-  var cupontTXT = event.body;
+  const user = event.clientContext.user.sub;
+  //const user = paramCupon.multiValueQueryStringParameters.idNetlify;
+  console.log("Dentro ", user);
+  //console.log("ValorCupon: ", event);
+
+  const cuponTXT = paramCupon.multiValueQueryStringParameters.CuponDes;
+  console.log("CuponDes: ", cuponTXT);
+  /*var cupontTXT = event.body;
   /*const { user } = context.clientContext;
   console.log("usuario: ", user.sub);
   var descuentoAplicado = await descuentoSubs(user.sub);*/
-  var resultadoDes = await descuentoSubs(user.sub, cupontTXT);
-  console.log("Resultado directo: ", resultadoDes.body.message);
+  var resultadoDes = await descuentoSubs(user, cuponTXT);
+  //console.log("Resultado directo: ", resultadoDes.body.message);
   response.body = resultadoDes.body.message;
-  console.log("Resultado completo: ", response);
+  //console.log("Resultado completo: ", response);
   return response;
   /*return {
     statusCode: 200,
@@ -31,7 +35,7 @@ exports.handler = async (event, context) => {
 async function descuentoSubs(id_netlify, cupon) {
   //Recupera id del cliente en stripe con el id del cliente en netlify.
   const clienteID = await queryStripeCliente(id_netlify);
-  console.log("Creando Enlace para: ", clienteID[0], " cupón: ", cupon);
+  //console.log("Creando Enlace para: ", clienteID[0], " cupón: ", cupon);
   var resUsuarioStri = clienteID[0];
 
   //console.log("descuentoSubs ", id_netlify);
@@ -42,10 +46,10 @@ async function descuentoSubs(id_netlify, cupon) {
     limit: 10, // Limit to 1 subscription as we're looking for a specific customer
   });
 
-  console.log("Suspcripción: ", subscription);
+  //console.log("Suspcripción: ", subscription);
   
-  console.log("ID sub: ", subscription.data[0].id);
-  /*const stripe = require('stripe')('sk_test_51OXmGhGAVjNy5dcWqdTRW9E1Eh3MyAspCBVlYYRiZQISneBAcRK0MC1c4WNBYwJbnhRuO4X8l1kwTeWaLpXamVb200Z0n4lQK8');
+  //console.log("ID sub: ", subscription.data[0].id);
+  /*const stripe = require('stripe')('sk_test_51OX.....');
   
   const subscription = await stripe.subscriptions.create({
     customer: '{{CUSTOMER_ID}}',
@@ -64,7 +68,7 @@ async function descuentoSubs(id_netlify, cupon) {
   console.log(cupon === 'Friends20'); // true
   */
  
-  if(JSON.parse(cupon) == "Friends20"){
+  if(cupon == "Friends20"){
     const subscriptionU = await stripe.subscriptions.update(
       subscription.data[0].id,
       {

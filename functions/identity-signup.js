@@ -1,3 +1,7 @@
+// ¡¡IMPORTANTE!! este archivo se ejecuta en netlify(servidor) y lo llama/usa el componente de logeo(netlify).
+// Estas llamadas quedan ocultas a nosotros. La web solo recibe el OK y el usuario.
+// Estos archivos no se pueden ejecutar en la parte fron-end(cliente web).
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 const { queryCrearNetIDStripeID } = require('./utils/fauna');
 const faunaDB = require('faunadb');
