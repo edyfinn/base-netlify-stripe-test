@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+ import {useStripe, useElements} from '@stripe/react-stripe-js';
 import CheckoutForm from './checkoutform';
 import imagen1 from './images/231127_FeatureImage_11.png';
 //import netlifyIdentity from 'netlify-identity-widget';

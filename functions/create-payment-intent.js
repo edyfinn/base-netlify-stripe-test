@@ -84,7 +84,7 @@ const addDashboardLinks = (message) => {
     console.log("EphemeralKey ", ephemeralKey.secret);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      currency: 'usd',
+      currency: 'eur',
       amount: 2400,
       customer: stripeIDCorrecto[0],
       payment_method_types: ['card', 'link'],

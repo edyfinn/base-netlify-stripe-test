@@ -13,6 +13,7 @@ import netlifyIdentity from 'netlify-identity-widget';
 import 'react-netlify-identity-widget/styles.css';
 
 import Payment from "./components/payment";
+import Completion from './components/completion'
 import Login from "./components/logeo";
 import Home from "./components/home";
 import Welcome from "./components/welcome";
@@ -159,6 +160,7 @@ const handleLogIn  = () => {
                                                                                  usuarioNetlify={identity.user?.id}
                                                                                  usuarioToken={identity.user?.token.access_token} />
                                                                                   : <Navigate to="/Home"  />}/>
+                      <Route path="/completion" element={<Completion stripePromise={stripeSI} />} />
                       <Route path="/dashboard"
                           element={<Dashboard />} />
                       <Route path="/home"
