@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import edyFlowLogoSmall from "./images/230728-edyflow-Logo-colordark-small.png";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Link, BrowserRouter }

@@ -5,12 +5,12 @@ NUEVA WEB REACTIVA
 Netlify -> Deploys-> Build settings
 
 ## *Build command: CI= react-scripts build
-No funciona en local: CI= react-scripts build
+No funciona en local es para producción: CI= react-scripts build
 No funciona en local: CI= false npm run build 
 Funciona en local: npm run build
 
 ## *Publish directory: build
-No funciona en local: build
+Funciona en local y tiene que estar en producción: build
 Funciona en local: _site
 
 # VARIABLES GLOBALES
@@ -19,6 +19,8 @@ Tiene que añadirse "REACT_" de esta forma "REACT_STRIPE_DEFAULT_PRICE_PLAN_TEST
 -------------------------------------------------
 # LIB NODE
 No es necesario instalar dotenv, ya esta incluido en react solo hay que usarlo.
+
+
 
 ## Install
 
