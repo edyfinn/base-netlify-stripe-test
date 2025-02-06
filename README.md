@@ -4,10 +4,9 @@ NUEVA WEB REACTIVA
 
 Netlify -> Deploys-> Build settings
 
-## *Build command: CI= react-scripts build
-No funciona en local es para producción: CI= react-scripts build
-No funciona en local: CI= false npm run build 
-Funciona en local y hay que ejecutarlo para que se actualice en Netlify y luego hay que volver a poner el de producción: npm run build
+## *Build command: CI= yarn run build
+No funciona en local es para producción: CI= yarn run build
+Hay que quitar CI= para local
 
 ## *Publish directory: build
 Funciona en local y tiene que estar en producción: build
@@ -16,6 +15,8 @@ Funciona en local: _site
 # VARIABLES GLOBALES
 Tiene que añadirse "REACT_" de esta forma "REACT_STRIPE_DEFAULT_PRICE_PLAN_TEST"
 
+# ¡¡IMPORTANTE!! para que Netlify haga el deploy bien hay que dejar el archivo yarn.lock en el repositorio no quitar en gitignore para que
+# Netlify compile con yarn y no con npm que da problemas con las dependencias.
 -------------------------------------------------
 # LIB NODE
 No es necesario instalar dotenv, ya esta incluido en react solo hay que usarlo.
