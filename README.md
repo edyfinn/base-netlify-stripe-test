@@ -4,8 +4,15 @@ NUEVA WEB REACTIVA
 
 Netlify -> Deploys-> Build settings
 
-## *Build command: CI= yarn run build
-No funciona en local es para producción: CI= yarn run build
+# ¡¡IMPORTANTE!! al usar Route-React hay que redireccionar todas las urls al mismo sitio. Esto se hace creando el archivo _redirects
+# en el raiz con este contenido "/* /index.html  200" sin extensión, luego en la línea de comandos en la configuración de Netlify se
+# añade "&& cp _redirects public/_redirects" para que copie el archivo en el momento de la compilación al directorio public y se añade
+# bien al archivo nitlify.toml para la config del despliegue, NO añadir a mano, da error.
+
+# El comando queda de la siguiente forma:
+
+## *Build command: CI= yarn run build && cp _redirects public/_redirects
+No funciona en local es para producción: CI= yarn run build && cp _redirects public/_redirects
 Hay que quitar CI= para local
 
 ## *Publish directory: build
