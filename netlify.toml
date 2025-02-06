@@ -1,0 +1,35 @@
+functionsDirectory = "C:\\Users\\Usuario\\Documents\\GitHub\\Finn\\base-netlify-stripe-test\\functions"
+functionsDirectoryOrigin = "config-v1"
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+headers = []
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\Usuario\\Documents\\GitHub\\Finn\\base-netlify-stripe-test\\_site"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "yarn run build"
+functions = "C:\\Users\\Usuario\\Documents\\GitHub\\Finn\\base-netlify-stripe-test\\functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
